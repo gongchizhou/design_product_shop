@@ -1,5 +1,5 @@
 <template>
-    <li :class="[$style.thumbnail, isActive ? $style.active : '']">
+    <li :class="[$style.thumbnail, isActive ? $style.active : '']" @click="handleClick">
         <img :src="attach"/>
     </li>
 </template>
@@ -9,11 +9,17 @@ export default {
   name: 'Thumbnail',
   props: {
     index: Number,
+    activeIndex: Number,
     attach: String
+  },
+  methods: {
+    handleClick () {
+      this.$emit('toggleThumb', this.index)
+    }
   },
   computed: {
     isActive () {
-      return this.index === 0
+      return this.index === this.activeIndex
     }
   }
 }
@@ -30,6 +36,9 @@ export default {
         overflow: hidden;
         padding-bottom: 12%;
         cursor: pointer;
+        &:hover {
+            opacity: 1;
+        }
         &.active {
             opacity: 1;
             top: -2px;

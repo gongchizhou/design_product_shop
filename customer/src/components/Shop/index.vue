@@ -27,7 +27,7 @@ export default {
   mounted () {
     axios.get('/api/products')
       .then((res) => {
-        this.items = res.data.data
+        this.items = res.data.rows
       })
   }
 }

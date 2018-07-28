@@ -5,15 +5,19 @@
         </div>
         <div :class="$style.main" class="clearfix">
             <div :class="$style.mainLeft">
-                <div :class="$style.img"><img :src="attachs[0]"></div>
+                <div :class="$style.img"><img :src="attachs[activeIndex]"></div>
                 <ul class="clearfix">
-                    <li is="Thumbnail" v-for="(attach, index) in attachs" :key="index" :attach="attach" :index="index"></li>
+                    <li is="Thumbnail" v-for="(attach, index) in attachs" :key="index"
+                    :attach="attach" :index="index" :activeIndex="activeIndex" @toggleThumb="toggleThumb">
+                    </li>
                 </ul>
             </div>
             <div :class="$style.mainRight">
                 <div :class="$style.title">{{item.title}}</div>
                 <div :class="$style.price">{{item.price}}</div>
                 <div :class="$style.description">{{item.description}}</div>
+                <Select :total="item.total" @changeCount="changeCount"/>
+                <Buy :id="item.id" :total="item.total" :count="selectCount"/>
             </div>
         </div>
     </section>
@@ -22,26 +26,38 @@
 <script>
 import axios from 'axios'
 import Thumbnail from './thumbnail.vue'
+import Select from './select.vue'
+import Buy from './buy.vue'
 
 export default {
   name: 'Product',
   components: {
-    Thumbnail
+    Thumbnail,
+    Select,
+    Buy
   },
   data () {
     return {
       item: {},
-      attachs: []
+      attachs: [],
+      selectCount: 1,
+      activeIndex: 0
     }
   },
   methods: {
     back () {
       window.history.back()
+    },
+    toggleThumb (index) {
+      this.activeIndex = index
+    },
+    changeCount (count) {
+      this.selectCount = count
     }
   },
   mounted () {
     const id = this.$route.params.id
-    axios.get(`/api/products?id=${id}`)
+    axios.get(`/api/products/${id}`)
       .then((res) => {
         this.item = res.data
         this.attachs = res.data.attachs
@@ -51,6 +67,7 @@ export default {
 </script>
 
 <style lang="less" module>
+    @import '../../assets/css/layout.less';
     .wrap {
         width: 60%;
         margin: 0 auto;
@@ -70,7 +87,10 @@ export default {
             }
         }
         .main {
+            .flex();
+            align-items: center;
             padding-bottom: 100px;
+            color: #50555c;
             .main-left, .main-right {
                 width: 50%;
                 float: left;
@@ -81,10 +101,21 @@ export default {
                 .img {
                     width: 400px;
                     height: 400px;
+                    margin-bottom: 10px;
                 }
             }
             .main-right {
                 padding-left: 15px;
+                .title, .price {
+                    font-size: 18px;
+                    font-weight: 600;
+                    margin-bottom: 15px;
+                }
+                .description {
+                    font-size: 14px;
+                    word-wrap: break-word;
+                    line-height: 1.5;
+                }
             }
         }
     }

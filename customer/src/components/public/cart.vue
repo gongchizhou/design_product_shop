@@ -1,7 +1,7 @@
 <template>
     <div :class="$style.cart">
         <i class="iconfont icon-cart"></i>
-        <span>{{this.count}}</span>
+        <span>{{this.totalCount}}</span>
     </div>
 </template>
 
@@ -11,7 +11,7 @@ import { mapState } from 'vuex'
 export default {
   name: 'Cart',
   computed: {
-    ...mapState(['count'])
+    ...mapState('cart', ['totalCount'])
   }
 }
 </script>

@@ -3,7 +3,7 @@
         <router-link :to="`/product/${item.id}`">
             <div :class="$style.content">
                 <div :class="$style.img">
-                    <img :src="item.attachs[0]"/>
+                    <img v-lazy="item.attachs[0]"/>
                 </div>
                 <div :class="$style.title">{{item.title}}</div>
                 <div :class="$style.price">{{item.price}}</div>
