@@ -17,7 +17,7 @@
                 <div :class="$style.price">{{item.price}}</div>
                 <div :class="$style.description">{{item.description}}</div>
                 <Select :total="item.total" @changeCount="changeCount"/>
-                <Buy :id="item.id" :total="item.total" :count="selectCount"/>
+                <Buy :item="item" :count="selectCount"/>
             </div>
         </div>
     </section>

@@ -1,28 +1,36 @@
 <template>
-    <div>
+    <div class="relative">
         <p v-if="showError" :class="$style.error">库存只剩{{total}}件</p>
         <a :class="[$style.btn, disabled]" @click="addToCart">
             加入购物车
         </a>
+        <Ball :count="count" v-model="showBall"/>
     </div>
 </template>
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
+import Ball from '../public/ball.vue'
 
 const { mapState, mapMutations } = createNamespacedHelpers('cart')
 export default {
   name: 'Buy',
+  components: {
+    Ball
+  },
   props: {
-    id: String,
-    total: Number,
+    item: Object,
     count: Number
   },
   data () {
     return {
+      showBall: false
     }
   },
   computed: {
+    total () {
+      return this.item.total
+    },
     showError () {
       return this.count + this.currentIncart.count > this.total
     },
@@ -34,11 +42,11 @@ export default {
   methods: {
     addToCart () {
       if (this.showError) return
-      const { id, count } = this
-      this.addCart({
-        id,
-        count
+      const _item = Object.assign({}, this.item, {
+        count: this.count
       })
+      this.showBall = true
+      this.addCart(_item)
     },
     ...mapMutations(['addCart'])
   }

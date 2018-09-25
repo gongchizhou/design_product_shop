@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/products', function(req, res){
-    let data = []
+    let rows = []
     for(let i=0; i<8; i++){
-        data.push({
+        rows.push({
             id: 100000*Math.random().toString().slice(0,5),
             title: 'Flask Oil Burner',
             attachs: [
@@ -19,7 +19,7 @@ router.get('/products', function(req, res){
     }
     res.send({
         success: true,
-        data
+        rows
     })
 
     /*const sql = 'SELECT * FROM list';

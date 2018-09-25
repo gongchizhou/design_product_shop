@@ -24,7 +24,7 @@ export default {
   methods: {
     gotoTop () {
       let top = document.documentElement.scrollTop || document.body.scrollTop
-      const duration = 800
+      const duration = 400
       const step = top / (duration / 10);
       (function scroll () {
         if (top > 0) {

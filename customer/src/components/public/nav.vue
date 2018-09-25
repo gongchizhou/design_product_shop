@@ -1,6 +1,6 @@
 <template>
     <section :class="$style.header">
-        <div :class="$style.content">
+        <div :class="[$style.content, animate]" class="ani">
             <div :class="$style.logo"></div>
             <div :class="$style.nav">
                 <ul>
@@ -20,7 +20,7 @@
                         </router-link>
                     </li>
                 </ul>
-                <Cart/>
+                <CartIcon/>
                 <User/>
             </div>
         </div>
@@ -29,14 +29,38 @@
 </template>
 
 <script>
-import Cart from './cart.vue'
+import CartIcon from './cart.vue'
 import User from './user.vue'
 
 export default {
   name: 'Nav',
   components: {
-    Cart,
+    CartIcon,
     User
+  },
+  data () {
+    return {
+      scrollDown: false
+    }
+  },
+  computed: {
+    animate () {
+      return this.scrollDown ? 'ani-up' : 'ani-down'
+    }
+  },
+  mounted () {
+    let timeoutId
+    window.addEventListener('scroll', () => {
+      timeoutId && clearTimeout(timeoutId)
+      timeoutId = setTimeout(() => {
+        this.scroll()
+      }, 200)
+    }, false)
+  },
+  methods: {
+    scroll () {
+      this.scrollDown = (document.documentElement.scrollTop > 20)
+    }
   }
 }
 </script>
@@ -59,7 +83,7 @@ export default {
             .logo {
                 width: 150px;
                 height: 150px;
-                background: lightblue;
+                background: url('/static/images/logo.png') no-repeat center;
             }
             .nav {
                 .flex();

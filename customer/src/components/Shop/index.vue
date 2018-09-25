@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.content">
     <h2 :class="$style.title">STORE</h2>
-    <Tab/>
+    <Tab @click="handleTabClick"/>
     <div class="clear">
       <Item v-for="item in items" :key="item.id" :item="item"></Item>
     </div>
@@ -25,10 +25,18 @@ export default {
     }
   },
   mounted () {
-    axios.get('/api/products')
-      .then((res) => {
-        this.items = res.data.rows
-      })
+    this.getProducts()
+  },
+  methods: {
+    handleTabClick (type) {
+      this.getProducts(type)
+    },
+    getProducts (type = 'all') {
+      axios.get(`/api/products?type=${type}`)
+        .then((res) => {
+          this.items = res.data.rows
+        })
+    }
   }
 }
 </script>

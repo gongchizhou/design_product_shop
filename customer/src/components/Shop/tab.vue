@@ -1,16 +1,45 @@
 <template>
     <ul :class="$style.tab">
-        <li :class="$style.active">全部</li>
-        <li>饰品</li>
-        <li>家居</li>
-        <li>文具</li>
-        <li>民艺</li>
+        <li :class="activeIndex === index ? $style.active : ''" v-for="(item, index) in list" :key="item.type" @click="handleClick(index)">{{item.name}}</li>
     </ul>
 </template>
 
 <script>
 export default {
-  name: 'Tab'
+  name: 'Tab',
+  data () {
+    return {
+      activeIndex: 0,
+      list: [
+        {
+          name: '全部',
+          type: 'all'
+        },
+        {
+          name: '饰品',
+          type: 'decoration'
+        },
+        {
+          name: '家居',
+          type: 'furniture'
+        },
+        {
+          name: '文具',
+          type: 'stationery'
+        },
+        {
+          name: '民艺',
+          type: 'folk'
+        }
+      ]
+    }
+  },
+  methods: {
+    handleClick (index) {
+      this.activeIndex = index
+      this.$emit('click', this.list[index].type)
+    }
+  }
 }
 </script>
 
@@ -28,6 +57,7 @@ export default {
             padding: 15px 10px;
             color: #678;
             font-size: 14px;
+            cursor: pointer;
             &.active {
                 color: #696969;
                 &:after {

@@ -1,14 +1,14 @@
 <template>
     <swiper :options="swiperOption">
     <swiper-slide>
-        <div :class="$style.item"></div>
+        <div :class="[$style.item,$style.slide1]"></div>
     </swiper-slide>
     <swiper-slide>
-        <div :class="[$style.item,$style.red]"></div>
+        <div :class="[$style.item,$style.slide2]"></div>
     </swiper-slide>
-    <div class="swiper-pagination" slot="pagination"></div>
-    <div class="swiper-button-prev" slot="button-prev"></div>
-    <div class="swiper-button-next" slot="button-next"></div>
+    <div class="swiper-pagination swiper-pagination-white" slot="pagination"></div>
+    <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
+    <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
     </swiper>
 </template>
 
@@ -43,17 +43,18 @@ export default {
 }
 </script>
 
-<style>
-    .swiper-pagination-bullet,.swiper-pagination-bullet-active{
-        background: #fff;
-    }
-</style>
 <style lang="less" module>
     .item{
-        height: 400px;
-        background: grey;
+        height: 460px;
+        background-color: lightBlue;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
     }
-    .red{
-        background: lightBlue;
+    .slide1{
+        background-image: url('/static/images/slide-1.png');
+    }
+    .slide2{
+        background-image: url('/static/images/slide-2.png');
     }
 </style>

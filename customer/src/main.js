@@ -8,6 +8,7 @@ import VueLazyload from 'vue-lazyload'
 
 import './assets/css/reset.less'
 import './assets/css/public.less'
+import './assets/css/animate.less'
 import './assets/font/iconfont.css'
 
 Vue.config.productionTip = false
